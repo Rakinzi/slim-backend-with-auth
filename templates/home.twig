@@ -1,0 +1,28 @@
+{% extends "layouts/base.twig" %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+<div class="home-container">
+    <h1>Welcome to Our Application</h1>
+    
+    {% if session.user %}
+        <div class="welcome-message">
+            <p>You are logged in. Visit your <a href="/dashboard">dashboard</a>.</p>
+        </div>
+    {% else %}
+        <div class="auth-options">
+            <p>Please <a href="/login">login</a> or <a href="/register">register</a> to continue.</p>
+        </div>
+    {% endif %}
+    
+    <div class="features">
+        <h2>Features</h2>
+        <ul>
+            <li>Secure Authentication</li>
+            <li>User Dashboard</li>
+            <li>Profile Management</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

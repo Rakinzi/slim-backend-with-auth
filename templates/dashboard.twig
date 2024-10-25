@@ -1,0 +1,24 @@
+{% extends "layouts/base.twig" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h1>Welcome, {{ user.name}}</h1>
+    
+    <div class="user-info">
+        <h2>Your Information</h2>
+        <p>Email: {{ user.email }}</p>
+        <p>Member since: {{ user.created_at|date("F j, Y") }}</p>
+    </div>
+    
+    <div class="dashboard-actions">
+        <h2>Quick Actions</h2>
+        <ul>
+            <li><a href="/profile">Edit Profile</a></li>
+            <li><a href="/settings">Settings</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
