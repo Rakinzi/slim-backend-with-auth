@@ -12,7 +12,7 @@ This project is built using the Slim PHP framework. Follow the instructions belo
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/your-repo/slim-project.git
+    git clone https://github.com/Rakinzi/slim-backend-with-auth.git
     ```
 2. Navigate to the project directory:
     ```sh
