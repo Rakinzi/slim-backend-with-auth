@@ -1,0 +1,5 @@
+{% if error %}
+	<p {% for attr, value in attributes %} 
+    {{attr}} = '{{value}}'
+    {% endfor %}>{{error}}</p>
+{% endif %}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			{% block title %}{% endblock %}
+		</title>
+		<style>
+			body {
+				font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
+			}
+		</style>
+		<link rel="stylesheet" href="/assets/css/bootstrap.min.css"/>
+
+	</head>
+	<body>
+		<div class="container-fluid"> {% block content %}{% endblock %}
+			</div>
+			<script src="/assets/js/app.js"></script>
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/bootstrap.bundle.js"></script>
+	</body>
+
+	</html>

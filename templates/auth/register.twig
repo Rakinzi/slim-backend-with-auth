@@ -1,25 +1,19 @@
-{% extends "layout.twig" %}
-
-{% block title %}Register{% endblock %}
+{% extends "layouts/auth.twig" %}
+{% block title %}Register
+{% endblock %}
 
 {% block content %}
-<div class="auth-container">
-    <h1>Register</h1>
-    <form method="POST" action="/register">
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-        </div>
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <button type="submit">Register</button>
-    </form>
-    <p>Already have an account? <a href="/login">Login here</a></p>
-</div>
+	<div class="row h-100 ">
+		<div class="col-md-8" style="background: url('assets/images/daniel-sessler-f2hibyGaKf4-unsplash.jpg'); background-size: cover;background-repeat: no-repeat; height: 100vh;"></div>
+		<div class="col-md-4 my-auto">
+			{% embed "components/Card.twig" %}
+				{% block card_title %}Welcome to the AI Center
+				{% endblock %}
+				{% block card_body %}
+					{% include "forms/RegisterForm.twig" %}
+				{% endblock %}
+			{% endembed %}
+		</div>
+	</div>
+
 {% endblock %}

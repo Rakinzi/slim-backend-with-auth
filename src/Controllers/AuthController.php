@@ -6,6 +6,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
 use App\Models\User;
+use App\Utils\FlashMessage;
+use Psr\Http\Message\StreamInterface;
 
 class AuthController
 {
@@ -18,12 +20,19 @@ class AuthController
 
     public function login(Request $request, Response $response): Response
     {
-        return $this->view->render($response, 'auth/login.twig');
+        $error = FlashMessage::get('error');
+        return $this->view->render($response, 'auth/login.twig', [
+            'error' => $error
+        ]);
     }
 
     public function register(Request $request, Response $response): Response
     {
-        return $this->view->render($response, 'auth/register.twig');
+        $error = $_SESSION['error'] ?? null;
+        unset($_SESSION['error']);
+        return $this->view->render($response, 'auth/register.twig', [
+            'error' => $error
+        ]);
     }
 
 
@@ -33,13 +42,15 @@ class AuthController
         $email = $data['email'] ?? '';
         $password = $data['password'] ?? '';
 
+
         $user = User::where('email', $email)->first();
 
         if ($user && password_verify($password, $user->password)) {
             $_SESSION['user'] = [
                 'id' => $user->id,
                 'name' => $user->name,
-                'email' => $user->email
+                'email' => $user->email,
+                'created_at' => $user->created_at
             ];
 
             unset($_SESSION['error']);
@@ -47,8 +58,9 @@ class AuthController
                 ->withStatus(302);
         }
 
-        $_SESSION['error'] = 'Invalid email or password';
-        return $response->withHeader('Location', '/login')
+        FlashMessage::set('error', 'Invalid User Credentials');
+        return $response
+            ->withHeader('Location', '/login')
             ->withStatus(302);
     }
 
@@ -58,14 +70,19 @@ class AuthController
 
         // Validate input
         if (empty($data['name']) || empty($data['email']) || empty($data['password'])) {
-            $_SESSION['error'] = 'All fields are required';
+            FlashMessage::set('error', 'All fields are required');
             return $response->withHeader('Location', '/register')->withStatus(302);
         }
 
         // Check if email already exists
         $existingUser = User::where('email', $data['email'])->first();
         if ($existingUser) {
-            $_SESSION['error'] = 'Email already registered';
+            FlashMessage::set('error', 'Email already registered');
+            return $response->withHeader('Location', '/register')->withStatus(302);
+        }
+
+        if ($data['password'] !== $data['confirmpassword']) {
+            FlashMessage::set('error', "Passwords do not match");
             return $response->withHeader('Location', '/register')->withStatus(302);
         }
 
@@ -80,14 +97,14 @@ class AuthController
             $_SESSION['success'] = 'Registration successful! Please login.';
             return $response->withHeader('Location', '/login')->withStatus(302);
         } catch (\Exception $e) {
-            $_SESSION['error'] = 'Registration failed. Please try again.';
+            FlashMessage::set('error', 'Registration failed. Please try again.');
             return $response->withHeader('Location', '/register')->withStatus(302);
         }
     }
 
     public function logout(Request $request, Response $response): Response
     {
-        // Add your logout logic here
+        unset($_SESSION['user']);
         session_destroy();
 
         return $response->withHeader('Location', '/')

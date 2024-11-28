@@ -13,4 +13,4 @@ $app->get('/login', [AuthController::class, 'login']);
 $app->post('/login', [AuthController::class, 'postLogin']);
 $app->get('/register', [AuthController::class, 'register']);
 $app->post('/register', [AuthController::class, 'postRegister']);
-$app->post('/logout', [AuthController::class, 'logout']);
+$app->get('/logout', [AuthController::class, 'logout']);

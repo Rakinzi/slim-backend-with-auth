@@ -7,7 +7,9 @@
         "nyholm/psr7-server": "^1.1",
         "monolog/monolog": "^3.7",
         "php-di/php-di": "^7.0",
-        "slim/psr7": "^1.7"
+        "slim/psr7": "^1.7",
+        "slim/csrf": "^1.5",
+        "guzzlehttp/guzzle": "^7.9"
     },
     "require-dev": {
         "doctrine/orm": "^3.3",

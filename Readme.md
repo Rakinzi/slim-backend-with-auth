@@ -11,14 +11,19 @@ This project is built using the Slim PHP framework. Follow the instructions belo
 ## Installation
 
 1. Clone the repository:
+
     ```sh
     git clone https://github.com/Rakinzi/slim-backend-with-auth.git
     ```
+
 2. Navigate to the project directory:
+
     ```sh
     cd slim-project
     ```
+
 3. Install dependencies using Composer:
+
     ```sh
     composer install
     ```
@@ -28,10 +33,13 @@ This project is built using the Slim PHP framework. Follow the instructions belo
 1. Start your XAMPP (or any other local server environment).
 2. Ensure Apache and MySQL services are running.
 3. Navigate to the project directory in your terminal:
+
     ```sh
     cd /C:/xampp/htdocs/slim
     ```
+
 4. Start the PHP built-in server:
+
     ```sh
     php -S localhost:8080 -t public
     ```
@@ -50,7 +58,6 @@ Your Slim PHP project should now be running at `http://localhost:8080`.
 ## Templating Engine
 
 This project uses the Twig templating engine. Twig is a flexible, fast, and secure template engine for PHP. You can find more information about Twig in the [Twig Documentation](https://twig.symfony.com/doc/).
-
 
 ## Additional Resources
 

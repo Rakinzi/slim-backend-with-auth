@@ -1,24 +1,35 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
-</head>
-<body>
-    <nav>
-        {% if session.user %}
-            <a href="/dashboard">Dashboard</a>
-            <a href="/logout">Logout</a>
-        {% else %}
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-        {% endif %}
-    </nav>
+	<head>
+		<title>
+			{% block title %}{% endblock %}
+		</title>
+		<link rel="stylesheet" href="/assets/css/style.css">
+		<style>
+			body {
+				font-family: 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif !important;
+			}
+		</style>
+		<link rel="stylesheet" href="/assets/css/bootstrap.min.css"/>
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+	</head>
+	<body>
+		<nav>
+			{% if user %}
+				<a href="/dashboard">Dashboard</a>
+				<a href="/logout">Logout</a>
+			{% else %}
+				<a href="/login">Login</a>
+				<a href="/register">Register</a>
+			{% endif %}
+		</nav>
 
-    <script src="/assets/js/app.js"></script>
-</body>
+		<main>
+			{% block content %}{% endblock %}
+		</main>
+
+		<script src="/assets/js/app.js"></script>
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/bootstrap.bundle.js"></script>
+	</body>
 </html>

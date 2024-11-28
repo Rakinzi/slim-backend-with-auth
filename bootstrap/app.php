@@ -2,6 +2,7 @@
 
 use Slim\Factory\AppFactory;
 use Slim\Views\TwigMiddleware;
+use \Slim\Middleware\Session;
 use DI\Container;
 
 require __DIR__ . '/../vendor/autoload.php';
