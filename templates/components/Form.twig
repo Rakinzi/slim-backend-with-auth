@@ -1,0 +1,27 @@
+<form action="{{ action }}" method="{{ method }}" class="p-4 rounded {{form_class}}">
+	{% for item in inputItems %}
+		<div class="mb-3">
+			{% include "components/Input.twig" with{
+			name: item.name,
+			type: item.type,
+			label: item.label,
+            id: item.id ?? '',
+            placeholder: item.placeholder		
+		}%}
+		</div>
+	{% endfor %}
+	<div class="text-center">
+		{% include "components/Error.twig" with {
+            error: error,
+            errorAtrributes: errorAtrributes
+        }%}
+		{% include "components/Button.twig" with {
+            buttonAttributes: buttonAttributes,
+            buttonText: buttonText
+        } %}
+		{% include "components/LinkButton.twig" with {
+            linkButtonText: linkButtonText,
+            linkButtonAttributes: linkButtonAttributes
+        }%}
+	</div>
+</form>

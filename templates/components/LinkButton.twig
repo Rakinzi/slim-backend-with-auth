@@ -1,1 +1,1 @@
-<a href="{{url}}" class="{{class}}">{{text}}</a>
+<a {% for attr,value in linkButtonAttributes %} {{attr}}='{{value}}' {% endfor %}>{{linkButtonText}}</a>

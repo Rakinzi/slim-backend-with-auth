@@ -3,6 +3,7 @@
 use Slim\App;
 use Slim\Middleware\MethodOverrideMiddleware;
 use Slim\Views\TwigMiddleware;
+use App\Middleware\AuthMiddleware;
 
 return function (App $app) {
     // Parse json, form data and xml
@@ -13,6 +14,9 @@ return function (App $app) {
 
     // Add Method Override Middleware
     $app->add(new MethodOverrideMiddleware());
+
+
+    $app->add(AuthMiddleware::class);
 
     // Add Error Middleware
     $errorMiddleware = $app->addErrorMiddleware(true, true, true);
@@ -41,4 +45,5 @@ return function (App $app) {
         $view->getEnvironment()->addGlobal('flash', $_SESSION['flash'] ?? []);
         return $handler->handle($request);
     });
+
 };

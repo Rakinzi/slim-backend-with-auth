@@ -1,5 +1,8 @@
 <?php
+
+use App\Migrations\ProjectsMigration as ProjectsMigration;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use App\Migrations\UserMigration as UserMigration;
 
 $capsule = new Capsule;
 
@@ -22,17 +25,11 @@ try {
     $pdo = new PDO("mysql:host=localhost", "root", "");
     $pdo->exec("CREATE DATABASE IF NOT EXISTS slim_auth");
     
-    if (!$capsule::schema()->hasTable('users')) {
-        $capsule::schema()->create('users', function ($table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->timestamps();
-        });
-    }
+    ProjectsMigration::table($capsule);
+    UserMigration::class;
+   
 } catch (\Exception $e) {
     die("Could not create database: " . $e->getMessage());
 }
 
-return $capsule;
+return $capsule; 

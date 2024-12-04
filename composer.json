@@ -9,7 +9,11 @@
         "php-di/php-di": "^7.0",
         "slim/psr7": "^1.7",
         "slim/csrf": "^1.5",
-        "guzzlehttp/guzzle": "^7.9"
+        "guzzlehttp/guzzle": "^7.9",
+        "phpmailer/phpmailer": "^6.9",
+        "jasongrimes/paginator": "^1.0",
+        "league/flysystem": "^3.29",
+        "cboden/ratchet": "^0.4.4"
     },
     "require-dev": {
         "doctrine/orm": "^3.3",

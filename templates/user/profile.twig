@@ -1,0 +1,131 @@
+{% extends "layouts/base.twig" %}
+
+{% block title %}Dashboard
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-6">
+			{% include "components/CardImage.twig" with{
+            image: '/assets/images/jonny-gios-wFn23XIfsv8-unsplash.jpg',
+            card_content: 'Hello World',
+            title: 'Pic',
+            link: 'secure/',
+            button_text: 'Click Me'
+        }%}
+		</div>
+		<div class="col-md-6">
+			{% include "components/Carousel.twig" with{
+                images: [
+                            {'src': '/assets/images/jonny-gios-wFn23XIfsv8-unsplash.jpg',
+                             'alt': 'Slide 1'},
+                            {'src': '/assets/images/daniel-sessler-f2hibyGaKf4-unsplash.jpg',
+                             'alt': 'Slide 2'},
+                ],
+                id : 'carousel1'
+            }%}
+		</div>
+	</div>
+	<div class="row mt-3">
+		<div class="col-md-6">
+			{% include "components/Table.twig" with{
+            headers: ['Name', 'Email', 'Role'],
+            rows: [
+                ['John Doe', 'john@example.com', 'Admin'],
+                ['Jane Smith', 'jane@example.com', 'User']
+            ]
+
+        }%}
+		</div>
+		<div class="col-md-6">
+			{% set var =   [{   name: 'username',
+			                    type: 'text',
+			                    label: 'Username:',
+                                placeholder: 'Username'
+                        	},
+                            {   name: 'email',
+			                    type: 'email',
+			                    label: 'Email:',
+                                placeholder: 'Email'
+                        	}] %}
+			{% include "components/Form.twig" with{
+                action: '/login',
+                inputItems: var,
+                method: 'POST',
+                buttonText: 'Click Me',
+                form_class: 'bg-light'
+            }%}
+		</div>
+	</div>
+	<div class="row mt-3">
+		<div class="col-md-6">
+			{% include "components/Modal.twig" with{
+                    'id': 'myModal',
+                    'title': 'My Modal Title',
+                    'modal_content': 'This is the modal content.',
+        }%}
+		</div>
+		<div class="col-md-6">
+			{% set var =   [{   name: 'username',
+			                    type: 'text',
+			                    label: 'Username:',
+                                placeholder: 'Username'
+                        	},
+                            {   name: 'email',
+			                    type: 'email',
+			                    label: 'Email:',
+                                placeholder: 'Email'
+                        	}] %}
+			{% include "components/Form.twig" with{
+                action: '/login',
+                inputItems: var,
+                method: 'POST',
+                buttonText: 'Click Me',
+                form_class: 'bg-light'
+            }%}
+		</div>
+	</div>
+    <div class="row mt-3">
+		<div class="col-md-6">
+            {% set accordion = [
+                {
+                    headerId: 'header1',
+                    accordionHeading: 'Welcome',
+                    accordionItemId: 'collapseOne',
+                    accordionText: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi odit error obcaecati dignissimos labore laborum debitis provident accusamus illo, ratione, tempora perferendis corrupti totam, quis et a saepe nihil ut ipsa expedita. Itaque odio nesciunt deleniti a nostrum, sapiente magnam, fugit eveniet quis, perferendis dolores labore illum. Animi, excepturi illo."
+                },
+                   {
+                    headerId: 'header2',
+                    accordionHeading: 'Byeeeee',
+                    accordionItemId: 'collapseTwo',
+                    accordionText: "Quis et a saepe nihil ut ipsa expedita. Itaque odio nesciunt deleniti a nostrum, sapiente magnam, fugit eveniet quis, perferendis dolores labore illum. Animi, excepturi illo."
+                }
+            ] %}
+			{% include "components/Accordion.twig" with {
+                accordions: accordion
+            }%}
+		</div>
+		<div class="col-md-6">
+			{% set var =   [{   name: 'username',
+			                    type: 'text',
+			                    label: 'Username:',
+                                placeholder: 'Username'
+                        	},
+                            {   name: 'email',
+			                    type: 'email',
+			                    label: 'Email:',
+                                placeholder: 'Email'
+                        	}] %}
+			{% include "components/Form.twig" with{
+                action: '/login',
+                inputItems: var,
+                method: 'POST',
+                buttonText: 'Click Me',
+                form_class: 'bg-light'
+            }%}
+		</div>
+	</div>
+{% endblock %}
+{% block scripts %}
+
+{% endblock %}

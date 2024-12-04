@@ -1,0 +1,59 @@
+<style>
+	.vertical-menu {
+		width: 250px;
+		z-index: 1001;
+		bottom: 0;
+		margin-top: 0;
+		position: fixed;
+		top: 0;
+		-webkit-box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, 0.03);
+		box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, 0.03);
+	}
+</style>
+
+<style>
+	#sidebar {
+		position: relative;
+	}
+
+	.vertical-menu .sub-menu li {
+		position: relative;
+		margin-left: 40px;
+		border-left: 2px solid #545a6d;
+	}
+
+	.vertical-menu .sub-menu li::before {
+		top: 15px;
+		right: auto;
+		content: "";
+		height: 2px;
+		width: 10px;
+		position: absolute;
+		display: inline-block;
+		border-left: 10px solid #545a6d;
+	}
+
+	/* TRBL */
+	#sidebar-menu ul li ul.sub-menu li a {
+		padding: 0.5rem 1.5rem 0.4rem 1rem !important;
+
+	}
+</style>
+
+<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark vertical-menu" id="sidebar-menu">
+	<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+		<svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+		<span class="fs-4">{{projectTitle}}</span>
+	</a>
+	<hr>
+	<ul class="nav nav-pills flex-column mb-auto" id="side-menu">
+		{% for sidebarItems in sideBar  %}
+			<li class="nav-item">
+				<a href="{{sidebarItems.link}}" class="nav-link active" aria-current="page">
+					<svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+					{{sidebarItems.name}}
+				</a>
+			</li>
+		{% endfor %}
+	</ul>
+</div>

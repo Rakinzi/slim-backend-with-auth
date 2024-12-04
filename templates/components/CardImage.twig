@@ -1,0 +1,12 @@
+<div class="card bg-dark text-white" style="width: 18rem;">
+	{% if image is defined %}
+		<img src="{{image}}" alt="{{title}}" class="card-img-top">
+	{% endif %}
+	<div class="card-body">
+		<h5 class="card-title">{{title}}</h5>
+		<p class="card-text">{{card_content}}</p>
+        {% if link is defined %}
+        <a href="{{ link }}" class="btn btn-light">{{button_text}}</a>
+        {% endif %}
+	</div>
+</div>

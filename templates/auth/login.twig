@@ -4,19 +4,16 @@
 {% endblock %}
 
 {% block content %}
-	<div class="row">
-		<div class="col-8" style="background-image: url('assets/images/jonny-gios-wFn23XIfsv8-unsplash.jpg'); background-size: cover; height: 100vh;"></div>
-		<div class="col-4 my-auto">
-			<div class="card">
-				{% embed "components/Card.twig" %}
-					{% block card_title %}Login
-					{% endblock %}
-					{% block card_body %}
-						{% include "forms/LoginForm.twig" %}
-					{% endblock %}
-				{% endembed %}
-
-			</div>
+	<div class="row" style="height: 100vh;">
+		<div class="col-md-8" style="background-image: url('assets/images/jonny-gios-wFn23XIfsv8-unsplash.jpg'); background-size: cover;"></div>
+		<div class="col-md-4 my-auto">
+			{% embed "components/Card.twig" %}
+				{% block card_title %}Login
+				{% endblock %}
+				{% block card_body %}
+					{% include "forms/LoginForm.twig" %}
+				{% endblock %}
+			{% endembed %}
 		</div>
 	</div>
 {% endblock %}

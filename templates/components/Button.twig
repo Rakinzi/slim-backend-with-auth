@@ -1,8 +1,9 @@
-
-<button
-{% for attr, value in attributes %}
-{{attr}} = '{{value}}'
-{% endfor %}
->
-{{text}}
+<button {% for attr, value in buttonAttributes %} {{attr}}='{{value}}' {% endfor %}>
+	{% if buttonText %}
+		{% if buttonText|striptags != buttonText %}
+			{{buttonText|raw}}
+		{% else %}
+			{{buttonText}}
+		{% endif %}
+	{% endif %}
 </button>

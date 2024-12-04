@@ -1,0 +1,58 @@
+{% block styles %}
+	<style>
+		button.carousel-control-prev:hover,
+		button.carousel-control-next:hover {
+			background-color: transparent !important;
+		}
+	</style>
+{% endblock %}
+
+<div class="carousel slide bg-dark" id="{{id}}" data-bs-ride="carousel">
+	<div class="carousel-indicators">
+		{% for index, image in images %}
+			{% include "components/Button.twig" with{
+            buttonAttributes:{
+                type: 'button',
+                'data-bs-target': '#'~ id,
+                'data-bs-slide-to': index,
+                class: loop.first ? 'active': '',
+                'aria-current': 'true',
+                'aria-label': "Slide"~(index + 1),
+            }
+        }%}
+		{% endfor %}
+	</div>
+	<div class="carousel-inner">
+		{% for image in images %}
+			<div class="carousel-item {% if loop.first %}active{% endif %}">
+				{% include "components/Image.twig" with{
+                    imageProps: {
+                src: image.src,
+                class: 'd-block w-100',
+                alt: image.alt
+                }
+            }%}
+			</div>
+		{% endfor %}
+	</div>
+	{% include "components/Button.twig" with{
+            buttonText: '<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>',
+            buttonAttributes:{
+                type: 'button',
+                'data-bs-target': '#'~ id,
+                'data-bs-slide': 'prev',
+                class: 'carousel-control-prev',
+            }
+        }%}
+	{% include "components/Button.twig" with{
+            buttonText: '<span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>',
+            buttonAttributes:{
+                type: 'button',
+                'data-bs-target': '#'~ id,
+                'data-bs-slide': 'next',
+                class: 'carousel-control-next',
+            }
+        }%}
+</div>

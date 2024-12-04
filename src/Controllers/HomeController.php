@@ -9,7 +9,7 @@ use Slim\Views\Twig;
 class HomeController
 {
     private $view;
-
+    private $baseUrl ;
     public function __construct(Twig $view)
     {
         $this->view = $view;
@@ -24,8 +24,10 @@ class HomeController
 
     public function dashboard(Request $request, Response $response): Response
     {
+        $this->baseUrl = 'secure';
         return $this->view->render($response, 'dashboard.twig', [
-            'user' => $_SESSION['user'] ?? null
+            'user' => $_SESSION['user'] ?? null,
+            'baseUrl' => $this->baseUrl
         ]);
     }
 }

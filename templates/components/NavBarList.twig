@@ -1,0 +1,7 @@
+<ul class="navbar-nav ms-auto">
+	{% for item in navBarItems %}
+    <li class="nav-item">
+    <a href={{item.href}} class="nav-link text-white">{{item.text}}</a>
+    </li>
+    {% endfor %}
+</ul>
