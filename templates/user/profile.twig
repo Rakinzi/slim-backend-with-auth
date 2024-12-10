@@ -7,7 +7,7 @@
 	<div class="row">
 		<div class="col-md-6">
 			{% include "components/CardImage.twig" with{
-            image: '/assets/images/jonny-gios-wFn23XIfsv8-unsplash.jpg',
+            image: './assets/images/jonny-gios-wFn23XIfsv8-unsplash.jpg',
             card_content: 'Hello World',
             title: 'Pic',
             link: 'secure/',
@@ -17,9 +17,9 @@
 		<div class="col-md-6">
 			{% include "components/Carousel.twig" with{
                 images: [
-                            {'src': '/assets/images/jonny-gios-wFn23XIfsv8-unsplash.jpg',
+                            {'src': './assets/images/jonny-gios-wFn23XIfsv8-unsplash.jpg',
                              'alt': 'Slide 1'},
-                            {'src': '/assets/images/daniel-sessler-f2hibyGaKf4-unsplash.jpg',
+                            {'src': './assets/images/daniel-sessler-f2hibyGaKf4-unsplash.jpg',
                              'alt': 'Slide 2'},
                 ],
                 id : 'carousel1'

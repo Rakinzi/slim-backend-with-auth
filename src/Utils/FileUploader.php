@@ -15,7 +15,7 @@ class FileUploaderFactory
 
     public static function upload(Request $request, Response $response)
     {
-        $adapter = new LocalFilesystemAdapter(__DIR__ . '/../public/assets/uploads');
+        $adapter = new LocalFilesystemAdapter(__DIR__ . '/../public./assets/uploads');
         $filesystem = new Filesystem($adapter);
         $uploaded_files = $request->getUploadedFiles();
 

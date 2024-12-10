@@ -26,6 +26,7 @@ $containerBuilder->addDefinitions([
             'debug' => true,
             'auto_reload' => true
         ]);
+        
     },
 
     'client' => function (Container $c) {

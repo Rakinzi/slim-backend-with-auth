@@ -51,7 +51,7 @@ class AuthController
             'registerButton' => [
                 'text' => 'Register',
                 'attributes' => [
-                    'href' => '/register',
+                    'href' => './register',
                     'class' => 'btn btn-light',
                 ]
             ]
@@ -109,7 +109,7 @@ class AuthController
             'loginButton' => [
                 'text' => 'Login',
                 'attributes' => [
-                    'href' => '/login',
+                    'href' => './login',
                     'class' => 'btn btn-light',
                 ]
             ]
@@ -142,7 +142,7 @@ class AuthController
             if ($sqlInjection) {
                 FlashMessage::set('error', 'Invalid User Credentials');
                 return $response
-                    ->withHeader('Location', '/login')
+                    ->withHeader('Location', './login')
                     ->withStatus(302);
             }
         } catch (ConnectException $th) {
@@ -153,7 +153,7 @@ class AuthController
         if (empty(filter_var($email, FILTER_VALIDATE_EMAIL)) || !$email_validator->validate($email)) {
             FlashMessage::set('error', 'Please enter a valid email address');
             return $response
-                ->withHeader('Location', '/login')
+                ->withHeader('Location', './login')
                 ->withStatus(302);
         }
         $user = User::where('email', $email)->first();
@@ -167,13 +167,13 @@ class AuthController
             ];
 
             unset($_SESSION['error']);
-            return $response->withHeader('Location', '/secure/')
+            return $response->withHeader('Location', './secure/')
                 ->withStatus(302);
         }
 
         FlashMessage::set('error', 'Invalid User Credentials');
         return $response
-            ->withHeader('Location', '/login')
+            ->withHeader('Location', './login')
             ->withStatus(302);
     }
     public function postRegister(Request $request, Response $response): Response
@@ -182,25 +182,25 @@ class AuthController
 
         if (empty($data['name']) || empty($data['email']) || empty($data['password'])) {
             FlashMessage::set('error', 'All fields are required');
-            return $response->withHeader('Location', '/register')->withStatus(302);
+            return $response->withHeader('Location', './register')->withStatus(302);
         }
 
         $existingUser = User::where('email', $data['email'])->first();
         if ($existingUser) {
             FlashMessage::set('error', 'Email already registered');
-            return $response->withHeader('Location', '/register')->withStatus(302);
+            return $response->withHeader('Location', './register')->withStatus(302);
         }
 
         if ($data['password'] !== $data['confirmpassword']) {
             FlashMessage::set('error', "Passwords do not match");
-            return $response->withHeader('Location', '/register')->withStatus(302);
+            return $response->withHeader('Location', './register')->withStatus(302);
         }
         $email = $data['email'];
         $email_validator = v::email();
         if (empty(filter_var($email, FILTER_VALIDATE_EMAIL)) || !$email_validator->validate($email)) {
             FlashMessage::set('error', 'Please enter a valid email address');
             return $response
-                ->withHeader('Location', '/login')
+                ->withHeader('Location', './login')
                 ->withStatus(302);
         }
 
@@ -212,10 +212,10 @@ class AuthController
             ]);
 
             $_SESSION['success'] = 'Registration successful! Please login.';
-            return $response->withHeader('Location', '/login')->withStatus(302);
+            return $response->withHeader('Location', './login')->withStatus(302);
         } catch (\Exception $e) {
             FlashMessage::set('error', 'Registration failed. Please try again.');
-            return $response->withHeader('Location', '/register')->withStatus(302);
+            return $response->withHeader('Location', './register')->withStatus(302);
         }
     }
 
@@ -224,7 +224,7 @@ class AuthController
         unset($_SESSION['user']);
         session_destroy();
 
-        return $response->withHeader('Location', '/')
+        return $response->withHeader('Location', './')
             ->withStatus(302);
     }
 }

@@ -19,7 +19,8 @@
         "amphp/amp": "^3.0",
         "react/event-loop": "^1.5",
         "slim/http-cache": "^1.2",
-        "dompdf/dompdf": "^3.0"
+        "dompdf/dompdf": "^3.0",
+        "selective/basepath": "^2.2"
     },
     "require-dev": {
         "doctrine/orm": "^3.3",

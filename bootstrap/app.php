@@ -1,8 +1,8 @@
 <?php
-
-date_default_timezone_set('Africa');
+date_default_timezone_set('Africa/Harare');
 use DI\Container;
 use Slim\Csrf\Guard;
+use Slim\Psr7\Environment;
 use Slim\Factory\AppFactory;
 use Slim\Routing\RouteContext;
 use Slim\Views\TwigMiddleware;
@@ -12,9 +12,9 @@ use App\Middleware\SqlInjectionMiddleware;
 use Slim\Middleware\MethodOverrideMiddleware;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
+use Selective\BasePath\BasePathMiddleware;
 
 require __DIR__ . '/../vendor/autoload.php';
-
 
 // Create Container
 /** @var Container $container */
@@ -25,8 +25,6 @@ AppFactory::setContainer($container);
 
 // Create App
 $app = AppFactory::create();
-
-
 $responseFactory = $app->getResponseFactory();
 
 $app->add(TwigMiddleware::create($app, $container->get('view')));
@@ -37,23 +35,22 @@ $middleware = function ($request, $handler) use ($container) {
     $container->get('view')->getEnvironment()->addGlobal('currentRoute', $routeName);
     return $handler->handle($request);
 };
-
 $app->add($middleware);
 
 // Add Routing Middleware
 $app->addRoutingMiddleware();
-
 $app->addBodyParsingMiddleware();
-
-
 $app->add(new MethodOverrideMiddleware());
-// Add Twig-View Middleware
-
 
 // Register Middleware On Container
 $container->set('csrf', function () use ($responseFactory) {
     return new Guard($responseFactory);
 });
+
+// $app->add($container->get('csrf'));
+
+// Add Error Middleware
+// $app->add(ErrorMiddleware::class);
 
 $app->add(SqlInjectionMiddleware::class);
 
@@ -66,8 +63,6 @@ $app->add(function (Request $request, RequestHandler $handler) {
         ->withHeader('X-Content-Type-Options', 'nosniff');
 });
 
-
-
 $app->add(function (Request $request, RequestHandler $handler) {
     if (session_status() !== PHP_SESSION_ACTIVE) {
         session_start();
@@ -75,15 +70,14 @@ $app->add(function (Request $request, RequestHandler $handler) {
     return $handler->handle($request);
 });
 
-
-// $app->add(ErrorMiddleware::class);
-
-// Add Error Middleware
-// $errorMiddleware = $app->addErrorMiddleware(true, true, true);
+$app->add(new BasePathMiddleware($app));
 
 
-// Register routes
+// Require database configuration
 require __DIR__ . '/../config/database.php';
-require __DIR__ . '/../src/routes.php';
+
+// Load and apply routes
+$routes = require __DIR__ . '/../src/routes.php';
+$routes($app);
 
 return $app;
