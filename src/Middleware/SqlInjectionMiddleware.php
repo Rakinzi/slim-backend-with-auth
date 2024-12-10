@@ -30,7 +30,7 @@ class SqlInjectionMiddleware
 
             if ($blocked) {
                 $response = new Response();
-                return $view->render($response, 'layouts/404.twig');
+                return $view->render($response, 'errors/404.twig');
             }
         } catch (ConnectException $e) {
             return $handler->handle($request);

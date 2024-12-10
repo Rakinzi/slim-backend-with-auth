@@ -1,14 +1,17 @@
 <?php
 
-use App\Middleware\AuthMiddleware;
-use App\Middleware\SqlInjectionMiddleware;
-use Slim\Factory\AppFactory;
-use Slim\Views\TwigMiddleware;
-use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
+date_default_timezone_set('Africa');
 use DI\Container;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Csrf\Guard;
+use Slim\Factory\AppFactory;
+use Slim\Routing\RouteContext;
+use Slim\Views\TwigMiddleware;
+use App\Middleware\ErrorMiddleware;
+use App\Middleware\NotFoundMiddleware;
+use App\Middleware\SqlInjectionMiddleware;
 use Slim\Middleware\MethodOverrideMiddleware;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -24,14 +27,33 @@ AppFactory::setContainer($container);
 $app = AppFactory::create();
 
 
+$responseFactory = $app->getResponseFactory();
+
+$app->add(TwigMiddleware::create($app, $container->get('view')));
+
+$middleware = function ($request, $handler) use ($container) {
+    $routeContext = RouteContext::fromRequest($request);
+    $routeName = $routeContext->getRoute()?->getName();
+    $container->get('view')->getEnvironment()->addGlobal('currentRoute', $routeName);
+    return $handler->handle($request);
+};
+
+$app->add($middleware);
+
 // Add Routing Middleware
 $app->addRoutingMiddleware();
 
 $app->addBodyParsingMiddleware();
 
+
 $app->add(new MethodOverrideMiddleware());
 // Add Twig-View Middleware
-$app->add(TwigMiddleware::create($app, $container->get('view')));
+
+
+// Register Middleware On Container
+$container->set('csrf', function () use ($responseFactory) {
+    return new Guard($responseFactory);
+});
 
 $app->add(SqlInjectionMiddleware::class);
 
@@ -44,6 +66,8 @@ $app->add(function (Request $request, RequestHandler $handler) {
         ->withHeader('X-Content-Type-Options', 'nosniff');
 });
 
+
+
 $app->add(function (Request $request, RequestHandler $handler) {
     if (session_status() !== PHP_SESSION_ACTIVE) {
         session_start();
@@ -51,9 +75,11 @@ $app->add(function (Request $request, RequestHandler $handler) {
     return $handler->handle($request);
 });
 
-// Add Error Middleware
-$errorMiddleware = $app->addErrorMiddleware(true, true, true);
 
+// $app->add(ErrorMiddleware::class);
+
+// Add Error Middleware
+// $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 
 
 // Register routes

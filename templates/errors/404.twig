@@ -1,0 +1,78 @@
+{% extends "layouts/base.twig" %}
+{% block title %}404 - Not Found
+{% endblock %}
+
+{% block styles %}
+	<style>
+		.body-error {
+			margin: 0;
+			background-color: #121212;
+			color: #ffffff;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+			text-align: center;
+		}
+
+		h1 {
+			font-size: 5rem;
+			color: #f44336;
+			margin: 0;
+		}
+
+		p {
+			font-size: 1.5rem;
+			color: #bbbbbb;
+			margin: 1rem 0;
+		}
+
+		.anchor {
+			display: inline-block;
+			padding: 10px 20px;
+			background-color: #f44336;
+			color: #ffffff;
+			text-decoration: none;
+			border-radius: 5px;
+			font-weight: bold;
+			margin-top: 20px;
+			transition: background-color 0.3s ease-in-out;
+		}
+
+		main {
+			background-color: #121212;
+		}
+		.anchor:hover {
+			background-color: #ff7961;
+		}
+
+		.error-animation {
+			font-size: 15rem;
+			color: #3f51b5;
+			animation: float 3s infinite ease-in-out;
+		}
+
+		@keyframes float {
+			0,
+			100% {
+				transform: translateY(0);
+			}
+			50% {
+				transform: translateY(-20px);
+			}
+		}
+	</style>
+{% endblock %}
+{% block content %}
+	<div class="body-error">
+		<div class="error-animation">😢</div>
+		<h1>404</h1>
+		<p>The page you're looking for doesn't exist.</p>
+		{% if user %}
+			<a class="anchor" href="/secure/">Go Back Home</a>
+		{% else %}
+			<a class="anchor" href="/">Go Back Home</a>
+		{% endif %}
+	</div>
+{% endblock %}

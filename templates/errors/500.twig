@@ -1,0 +1,74 @@
+{% extends "layouts/base.twig" %}
+{% block title %}500 - Internal Server Error
+{% endblock %}
+
+{% block styles %}
+	<style>
+		.body-error {
+			margin: 0;
+			background-color: #1e1e1e;
+			color: #eeeeee;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+			text-align: center;
+		}
+
+		h1 {
+			font-size: 4rem;
+			color: #ff9800;
+			margin: 0;
+		}
+
+		p {
+			font-size: 1.2rem;
+			color: #cccccc;
+			margin: 1rem 0;
+		}
+
+		.anchor {
+			display: inline-block;
+			padding: 10px 20px;
+			background-color: #ff9800;
+			color: #ffffff;
+			text-decoration: none;
+			border-radius: 5px;
+			font-weight: bold;
+			margin-top: 20px;
+			transition: background-color 0.3s ease-in-out;
+		}
+
+		.anchor:hover {
+			background-color: #ffc947;
+		}
+
+		.error-animation {
+			width: 200px;
+			height: 200px;
+			border-radius: 50%;
+			background: linear-gradient(45deg, #f44336, #3f51b5);
+			animation: pulse 2s infinite;
+			margin-bottom: 20px;
+		}
+
+		@keyframes pulse {
+			0,
+			100% {
+				transform: scale(1);
+			}
+			50% {
+				transform: scale(1.1);
+			}
+		}
+	</style>
+{% endblock %}
+{% block content %}
+	<div class="body-error">
+		<div class="error-animation"></div>
+		<h1>500</h1>
+		<p>Something went wrong on our end. We're working to fix it!</p>
+		<a class="anchor" href="">Try Again</a>
+	</div>
+{% endblock %}

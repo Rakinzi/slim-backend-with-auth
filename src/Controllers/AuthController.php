@@ -9,8 +9,8 @@ use GuzzleHttp\Exception\ConnectException;
 use Slim\Views\Twig;
 use App\Models\User;
 use App\Utils\FlashMessage;
-use Psr\Http\Message\StreamInterface;
 use GuzzleHttp\Client;
+use Respect\Validation\Validator as v;
 
 
 class AuthController
@@ -148,7 +148,9 @@ class AuthController
         } catch (ConnectException $th) {
             LoggingMiddleware::class;
         }
-        if (empty(filter_var($email, FILTER_VALIDATE_EMAIL))) {
+
+        $email_validator = v::email();
+        if (empty(filter_var($email, FILTER_VALIDATE_EMAIL)) || !$email_validator->validate($email)) {
             FlashMessage::set('error', 'Please enter a valid email address');
             return $response
                 ->withHeader('Location', '/login')
@@ -193,8 +195,15 @@ class AuthController
             FlashMessage::set('error', "Passwords do not match");
             return $response->withHeader('Location', '/register')->withStatus(302);
         }
+        $email = $data['email'];
+        $email_validator = v::email();
+        if (empty(filter_var($email, FILTER_VALIDATE_EMAIL)) || !$email_validator->validate($email)) {
+            FlashMessage::set('error', 'Please enter a valid email address');
+            return $response
+                ->withHeader('Location', '/login')
+                ->withStatus(302);
+        }
 
-        // Create new user
         try {
             User::create([
                 'name' => $data['name'],

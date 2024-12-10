@@ -1,0 +1,48 @@
+<style>
+	.sidebar {
+		position: fixed;
+		top: 0;
+		left: 0;
+		height: 100vh;
+		z-index: 1030;
+        width: 16%;
+		overflow-y: auto;
+	}
+</style>
+
+<div class="d-flex flex-column flex-shrink-0 p-3 bg-light text-dark sidebar">
+	<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+		<span class="fs-4">{{ title|default('Sidebar') }}</span>
+	</a>
+	<hr>
+	<ul class="nav nav-pills flex-column mb-auto">
+		{% for item in items %}
+			<li class="nav-item">
+				<a href="{{ item.url }}" class="nav-link text-dark {{ currentRoute == item.routeName ? 'active bg-secondary' : '' }}">
+					{% if item.icon %}
+						<i class="{{ item.icon }}"></i>
+					{% endif %}
+					{{ item.label }}
+				</a>
+			</li>
+		{% endfor %}
+	</ul>
+	<hr>
+	<div class="dropdown">
+		<a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+			<strong>{{ user.name|default('User') }}</strong>
+		</a>
+		<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser">
+			<li>
+				<a class="dropdown-item" href="{{ user.profileUrl|default('#') }}">Profile</a>
+			</li>
+			<li>
+				<a class="dropdown-item" href="{{ user.settingsUrl|default('#') }}">Settings</a>
+			</li>
+			<li><hr class="dropdown-divider"></li>
+			<li>
+				<a class="dropdown-item" href="{{ user.logoutUrl|default('#') }}">Sign out</a>
+			</li>
+		</ul>
+	</div>
+</div>

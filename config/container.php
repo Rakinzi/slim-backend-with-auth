@@ -1,16 +1,19 @@
 <?php
 
 use DI\Container;
-use DI\ContainerBuilder;
 use Slim\Views\Twig;
+use GuzzleHttp\Client;
+use DI\ContainerBuilder;
+use App\Utils\PdfGenerator;
 use Twig\Loader\FilesystemLoader;
+use App\Controllers\PdfController;
 use App\Controllers\AuthController;
 use App\Controllers\HomeController;
-use App\Controllers\ProjectsController;
 use App\Controllers\UserController;
-use App\Middleware\SqlInjectionMiddleware;
+use App\Middleware\ErrorMiddleware;
+use App\Controllers\ProjectsController;
 use App\Controllers\SqlInjectionController;
-use GuzzleHttp\Client;
+use App\Utils\CsrfGuard;
 
 $containerBuilder = new ContainerBuilder();
 
@@ -19,7 +22,7 @@ $containerBuilder->addDefinitions([
     'view' => function (Container $c) {
         $loader = new FilesystemLoader(__DIR__ . '/../templates');
         return new Twig($loader, [
-            'cache' => false,
+            'cache' => __DIR__.'/../cache',
             'debug' => true,
             'auto_reload' => true
         ]);
@@ -48,7 +51,22 @@ $containerBuilder->addDefinitions([
 
     SqlInjectionController::class => function (Container $c){
         return new SqlInjectionController($c->get('view'), $c->get('client'));
-    }
+    },
+    
+    ErrorMiddleware::class => function (Container $c) {
+        return new ErrorMiddleware($c->get('view'));
+    },
+
+    PdfGenerator::class => function () {
+        return new PdfGenerator();
+    },
+
+    PdfController::class => function ($container) {
+        return new PdfController(
+            $container->get('view'),
+            $container->get(PdfGenerator::class)
+        );
+    },
 ]);
 
 return $containerBuilder->build();

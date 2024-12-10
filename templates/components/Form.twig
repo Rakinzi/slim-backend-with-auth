@@ -1,4 +1,6 @@
 <form action="{{ action }}" method="{{ method }}" class="p-4 rounded {{form_class}}">
+	<input type="hidden" name="csrf_name" value="{{ csrf.getTokenName() }}">
+	<input type="hidden" name="csrf_value" value="{{ csrf.getTokenValue() }}">
 	{% for item in inputItems %}
 		<div class="mb-3">
 			{% include "components/Input.twig" with{

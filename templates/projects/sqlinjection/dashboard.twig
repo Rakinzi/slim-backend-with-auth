@@ -1,0 +1,52 @@
+{% extends "projects/sqlinjection.twig" %}
+{% block content %}
+	<div class="row mt-3">
+		<div class="col-md-6">
+			{% embed "components/Card.twig" %}
+				{% block cardStyle %}
+					style="box-shadow: -2px 1px 1px 1px;"
+				{% endblock %}
+				{% block card_title %}
+					Blocked Users
+				{% endblock %}
+				{% block card_body %}
+					<div class="text-center" style="font-size: xx-large;">
+						{{homeDetails.blocked_users[0]|length}}
+					</div>
+				{% endblock %}
+			{% endembed %}
+		</div>
+		<div class="col-md-6">
+			{% embed "components/Card.twig" %}
+				{% block cardStyle %}
+					style="box-shadow: -2px 1px 1px 1px;"
+				{% endblock %}
+				{% block card_title %}
+					Number of Payloads
+				{% endblock %}
+				{% block card_body %}
+					<div class="text-center" style="font-size: xx-large;">
+						{{homeDetails.payloads[0]|length}}
+					</div>
+				{% endblock %}
+			{% endembed %}
+		</div>
+	</div>
+    	<div class="row mt-3">
+		<div class="col-md-6">
+			{% embed "components/Card.twig" %}
+				{% block cardStyle %}
+					style="box-shadow: -2px 1px 1px 1px;"
+				{% endblock %}
+				{% block card_title %}
+					Activities
+				{% endblock %}
+				{% block card_body %}
+					<div class="text-center" style="font-size: xx-large;">
+						{{homeDetails.activities[0]|length}}
+					</div>
+				{% endblock %}
+			{% endembed %}
+		</div>
+	</div>
+{% endblock %}

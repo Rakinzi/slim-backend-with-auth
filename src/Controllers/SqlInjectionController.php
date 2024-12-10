@@ -9,14 +9,14 @@ use Slim\Views\Twig;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-use function DI\string;
-
 class SqlInjectionController
 {
     protected $view;
     protected $client;
     public $homeDetails = array();
     public $collectedData = [];
+    protected $user;
+
     public function __construct(Twig $view, Client $client)
     {
         $this->view = $view;
@@ -42,24 +42,61 @@ class SqlInjectionController
             return  json_decode($data, true);
         }, $this->collectedData);
 
-        print_r($newData);
-        // $insert_activities =  json_decode($this->collectedData[2], true);
+        $payloads = array();
+        $description = '';
+        $project_name = '';
+        $activities = array();
+        $blocked_users = array();
+        foreach ($newData as $key => $value) {
+            if (array_key_exists('payloads', $value)) {
+                $payloads[] = $value['payloads'];
+            }
+            if (array_key_exists('description', $value)) {
+                $description = $value['description'];
+            }
+            if (array_key_exists('project_name', $value)) {
+                $project_name = $value['project_name'];
+            }
+            if (array_key_exists('activities', $value)) {
+                $activities[] = $value['activities'];
+            }
+            if (array_key_exists('blocked_users', $value)) {
+                $blocked_users[] = $value['blocked_users'];
+            }
+        }
 
-        // $blocked_users = $insert_activities['blocked_users'];
-        // $activity = $insert_activities['activities'];
-        // $payloads =  json_decode($this->collectedData[1], true)['payloads'];
-
-        $navbar = [
-            ['href' => '',]
+        $this->user = $_SESSION['user'];
+        $this->homeDetails[] = [
+            'payloads' => $payloads,
+            'activities' => $activities,
+            'project_name' => $project_name,
+            'blocked_users' => $blocked_users,
+            'description' => $description
         ];
     }
 
     public function show(Request $request, Response $response): Response
     {
-        $user = $_SESSION['user'];
+        
+        return $this->view->render($response, 'projects/sqlinjection/dashboard.twig', [
+            'user' => $this->user,
+            'homeDetails' => $this->homeDetails[0]
+        ]);
+    }
 
-        return $this->view->render($response, 'projects/sqlinjection.twig', [
-            'user' => $user
+    public function activities(Request $request, Response $response): Response
+    {
+        return $this->view->render($response, 'projects/sqlinjection/activities.twig', [
+            'user' => $this->user,
+            'homeDetails' => $this->homeDetails[0]
+        ]);
+    }
+
+    public function payloads(Request $request, Response $response): Response
+    {
+        return $this->view->render($response, 'projects/sqlinjection/payloads.twig', [
+            'user' => $this->user,
+            'homeDetails' => $this->homeDetails[0]
         ]);
     }
 

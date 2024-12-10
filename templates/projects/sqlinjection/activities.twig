@@ -1,0 +1,11 @@
+{% extends "projects/sqlinjection.twig" %}
+{% block content %}
+	<div class="row mt-3">
+		<div class="col-md-12">
+			{% include "components/Table.twig" with{
+            headers: ['Activity ID', 'Host Name', 'IP Address', 'Timestamp', 'User Agents'],
+            rows: homeDetails.activities[0]
+        }%}
+		</div>
+	</div>
+{% endblock %}

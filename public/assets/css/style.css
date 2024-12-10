@@ -28,13 +28,6 @@ nav a:hover {
     color: #ddd;
 }
 
-/* Main Content */
-main {
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
 /* Forms */
 .auth-form {
     max-width: 400px;
