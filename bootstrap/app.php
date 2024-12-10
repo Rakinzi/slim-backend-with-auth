@@ -2,17 +2,15 @@
 date_default_timezone_set('Africa/Harare');
 use DI\Container;
 use Slim\Csrf\Guard;
-use Slim\Psr7\Environment;
 use Slim\Factory\AppFactory;
 use Slim\Routing\RouteContext;
 use Slim\Views\TwigMiddleware;
 use App\Middleware\ErrorMiddleware;
-use App\Middleware\NotFoundMiddleware;
 use App\Middleware\SqlInjectionMiddleware;
+use Selective\BasePath\BasePathMiddleware;
 use Slim\Middleware\MethodOverrideMiddleware;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
-use Selective\BasePath\BasePathMiddleware;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -50,7 +48,7 @@ $container->set('csrf', function () use ($responseFactory) {
 // $app->add($container->get('csrf'));
 
 // Add Error Middleware
-// $app->add(ErrorMiddleware::class);
+$app->add(ErrorMiddleware::class);
 
 $app->add(SqlInjectionMiddleware::class);
 

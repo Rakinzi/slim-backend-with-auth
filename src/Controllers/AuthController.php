@@ -2,21 +2,24 @@
 
 namespace App\Controllers;
 
+use App\Models\User;
+use Slim\Views\Twig;
+use GuzzleHttp\Client;
+use App\Utils\FlashMessage;
+use Slim\Routing\RouteContext;
 use App\Middleware\LoggingMiddleware;
+use Respect\Validation\Validator as v;
+use GuzzleHttp\Exception\ConnectException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use GuzzleHttp\Exception\ConnectException;
-use Slim\Views\Twig;
-use App\Models\User;
-use App\Utils\FlashMessage;
-use GuzzleHttp\Client;
-use Respect\Validation\Validator as v;
 
 
 class AuthController
 {
     private $view;
     private $client;
+    public $loginUrl;
+    public $registerUrl;
 
     public function __construct(Twig $view, Client $client)
     {
@@ -51,7 +54,7 @@ class AuthController
             'registerButton' => [
                 'text' => 'Register',
                 'attributes' => [
-                    'href' => './register',
+                    'href' => $this->registerUrl,
                     'class' => 'btn btn-light',
                 ]
             ]
@@ -223,8 +226,9 @@ class AuthController
     {
         unset($_SESSION['user']);
         session_destroy();
-
-        return $response->withHeader('Location', './')
+        $routeParser = RouteContext::fromRequest($request)->getRouteParser();
+        $homeUrl = $routeParser->urlFor('home');
+        return $response->withHeader('Location', $homeUrl)
             ->withStatus(302);
     }
 }

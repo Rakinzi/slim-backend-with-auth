@@ -13,7 +13,9 @@ use App\Controllers\UserController;
 use App\Middleware\ErrorMiddleware;
 use App\Controllers\ProjectsController;
 use App\Controllers\SqlInjectionController;
+use App\Middleware\LoggingMiddleware;
 use App\Utils\CsrfGuard;
+use Slim\Routing\RouteContext;
 
 $containerBuilder = new ContainerBuilder();
 
@@ -68,6 +70,7 @@ $containerBuilder->addDefinitions([
             $container->get(PdfGenerator::class)
         );
     },
+
 ]);
 
 return $containerBuilder->build();

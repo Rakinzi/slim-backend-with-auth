@@ -3,7 +3,7 @@
 		{% include "components/Anchor.twig" with {
     text: user ? 'AI City' : 'Welcome',
     attributes: {
-        href : user ? '/secure/' : '/',
+        href : user ? url_for('secure.dashboard') : url_for('home'),
         class: 'navbar-brand'
     } 
 }%}
@@ -24,11 +24,11 @@
 		{% if user %}
 			<div class="collapse navbar-collapse" id="navbarNav">
 				{% set navBarItems = [
-            {href: '/secure/about', text: 'About'},
-            {href: '/secure/contact', text: 'Contact'},
-            {href: '/secure/projects', text: 'Projects'},
-            {href: '/secure/profile', text: 'Profile'},
-            {href: '/secure/logout', text: 'Logout'}
+            {href: './about', text: 'About'},
+            {href: './contact', text: 'Contact'},
+            {href: url_for('secure.projects'), text: 'Projects'},
+            {href: './profile', text: 'Profile'},
+            {href: url_for('secure.logout'), text: 'Logout'}
 
 			] %}
 
